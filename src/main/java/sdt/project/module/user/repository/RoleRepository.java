@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface RoleRepository extends JpaRepository<Role, UUID> {
-    Role findRoleByName(String name);
+    Optional<Role> findRoleByName(String name);
     @Query("""
     select r.name
     from UserRole ur

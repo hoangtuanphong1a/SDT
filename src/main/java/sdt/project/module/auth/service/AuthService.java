@@ -113,7 +113,8 @@ public class AuthService {
         profile.setPhone(req.phone());
         jobSeekerProfileRepo.save(profile);
 
-        Role role = roleRepo.findRoleByName(RoleCode.JOB_SEEKER.name());
+        Role role = roleRepo.findRoleByName(RoleCode.JOB_SEEKER.name())
+                .orElseThrow(() -> new NotFoundException("Role not found"));
         userRoleRepo.save(new UserRole(user, role, DateUtils.now()));
 
         otpService.sendOtp(user);
@@ -143,7 +144,8 @@ public class AuthService {
         user.setIsEmailConfirmed(false);
         userRepo.save(user);
 
-        Role role = roleRepo.findRoleByName(RoleCode.COMPANY.name());
+        Role role = roleRepo.findRoleByName(RoleCode.COMPANY.name())
+                .orElseThrow(() -> new NotFoundException("Role not found"));
         userRoleRepo.save(new UserRole(user, role, DateUtils.now()));
 
         otpService.sendOtp(user);
